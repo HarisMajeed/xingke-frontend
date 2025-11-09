@@ -1,0 +1,8 @@
+:root {
+  --font-base: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --color-surface: #ffffff;
+  --color-text-primary: #f4f4f6;
+  --color-text-secondary: #e0d2e8;
+  --color-accent: #d522a4;
+  --color-accent-dark: #7b145f;
+}

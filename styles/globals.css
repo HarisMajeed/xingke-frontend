@@ -1,0 +1,27 @@
+@import "./variables.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-base);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: var(--color-surface);
+  }
+}
+
+@layer components {
+  .dotted-map {
+    background-image: theme("backgroundImage.world-map");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+}
