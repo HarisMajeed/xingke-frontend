@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="bg-brand-700 py-8 text-white/80">
+    <footer className="bg-gray-800 py-8 text-white/80">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 text-center text-xs sm:flex-row sm:text-left">
         <span>© {new Date().getFullYear()} Coin Reserve. All rights reserved.</span>
         <div className="flex gap-4">

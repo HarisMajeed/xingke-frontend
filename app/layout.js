@@ -1,3 +1,5 @@
+import { Footer } from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 import "../styles/globals.css";
 
 export const metadata = {
@@ -9,7 +11,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="bg-white">
+          <Header />
+
       <body className="antialiased text-slate-900">{children}</body>
+      <Footer />
     </html>
   );
 }
