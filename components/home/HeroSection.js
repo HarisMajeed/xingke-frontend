@@ -59,7 +59,7 @@ const HeroSection = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden" style={{
-      backgroundImage: "url('/images/heroBanner.jpg')",
+      backgroundImage: "url('/images/heroImage.jpg')",
       backgroundSize: 'cover',
       backgroundPosition: 'center',
     }}>
