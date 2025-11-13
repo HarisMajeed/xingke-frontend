@@ -12,35 +12,28 @@ const Header = () => {
   const pathname = usePathname()
   const router = useRouter()
 
-  const toggleMenu = () => {
-    setIsOpen(!isOpen)
-  }
+  const toggleMenu = () => setIsOpen(!isOpen)
 
   const navLinks = [
     { href: '/', label: 'Home' },
-    { href: '/', label: 'AML Policy', scrollToId: 'aml-section' },
+    { href: '', label: 'AML Policy', scrollToId: 'aml-section' },
     { href: '/privacy-policy', label: 'Legal Policies', scrollToId: 'policies-section' },
-    { href: '/contact-us', label: 'Contact', scrollToId: 'contact-section' }
+    { href: '/contact-us', label: 'Contact', scrollToId: 'contact-section' },
+    { href: '/verify ', label: 'verify ' },
   ]
 
   const isActive = (href) => pathname === href
+  const showHeader = pathname !== '/verify' // Hide on /verifications
 
   const handleNavClick = (e, link) => {
     if (link.scrollToId) {
       e.preventDefault()
-
       if (pathname === link.href) {
-        // Already on the page, just scroll
         scrollToSection(link.scrollToId)
       } else {
-        // Navigate to the page
         router.push(link.href)
-        // Wait for navigation and DOM to update
-        setTimeout(() => {
-          scrollToSection(link.scrollToId)
-        }, 300)
+        setTimeout(() => scrollToSection(link.scrollToId), 300)
       }
-
       setIsOpen(false)
     } else {
       setIsOpen(false)
@@ -50,53 +43,35 @@ const Header = () => {
   const scrollToSection = (elementId) => {
     const element = document.getElementById(elementId)
     if (element) {
-      const headerHeight = 80 // Height of fixed header
+      const headerHeight = 80
       const elementPosition = element.getBoundingClientRect().top + window.scrollY
-
-      window.scrollTo({
-        top: elementPosition - headerHeight,
-        behavior: 'smooth'
-      })
+      window.scrollTo({ top: elementPosition - headerHeight, behavior: 'smooth' })
     }
   }
 
-  // Handle scroll on page load if there's a hash
   useEffect(() => {
     const hash = window.location.hash
     if (hash) {
       const elementId = hash.replace('#', '')
-      setTimeout(() => {
-        scrollToSection(elementId)
-      }, 500)
+      setTimeout(() => scrollToSection(elementId), 500)
     }
   }, [pathname])
 
   const mobileMenuVariants = {
     hidden: { opacity: 0, height: 0 },
-    visible: {
-      opacity: 1,
-      height: 'auto',
-      transition: { duration: 0.3 }
-    },
-    exit: {
-      opacity: 0,
-      height: 0,
-      transition: { duration: 0.2 }
-    }
+    visible: { opacity: 1, height: 'auto', transition: { duration: 0.3 } },
+    exit: { opacity: 0, height: 0, transition: { duration: 0.2 } }
   }
 
   const linkVariants = {
     hidden: { opacity: 0, x: -20 },
-    visible: (i) => ({
-      opacity: 1,
-      x: 0,
-      transition: { delay: i * 0.05, duration: 0.3 }
-    })
+    visible: (i) => ({ opacity: 1, x: 0, transition: { delay: i * 0.05, duration: 0.3 } })
   }
+
+  if (!showHeader) return null // Hide header completely on /verifications
 
   return (
     <>
-      {/* Fixed Header */}
       <motion.header
         className="fixed top-0 left-0 right-0 bg-white shadow-md z-30"
         initial={{ y: -100 }}
@@ -106,19 +81,18 @@ const Header = () => {
         <nav className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
               <Link href="/" className="flex items-center gap-3">
-                <Image
+                {/* <Image
                   src="/images/logo.png"
                   alt="Xingke Development"
                   width={120}
                   height={30}
                   className="object-contain"
                   priority
-                />
+                /> */}
+
+                <span className="text-2xl md:text-3xl font-bold text-gray-800">CoinCollection </span>
               </Link>
             </motion.div>
 
@@ -135,10 +109,11 @@ const Header = () => {
                     <Link
                       href={link.href}
                       onClick={(e) => handleNavClick(e, link)}
-                      className={`px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all text-sm lg:text-base ${isActive(link.href)
-                        ? 'text-blue-600 bg-blue-50'
-                        : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
-                        }`}
+                      className={`px-3 lg:px-4 py-2 rounded-lg font-semibold transition-all text-sm lg:text-base ${
+                        isActive(link.href)
+                          ? 'text-blue-600 bg-blue-50'
+                          : 'text-gray-800 hover:text-blue-600 hover:bg-blue-50'
+                      }`}
                     >
                       {link.label}
                     </Link>
@@ -149,15 +124,7 @@ const Header = () => {
 
             {/* Desktop CTA + Language Selector */}
             <div className="hidden md:flex items-center justify-end gap-4">
-              <div className="relative mx-2 block sm:mx-4">
-                <select aria-label="Select language" className="min-w-[100px] w-auto rounded-md border border-gray-300 px-3 py-2 text-sm outline-none transition duration-150 ease-in-out focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:border-gray-600 dark:focus:border-gray-600 dark:focus:ring-gray-600">
-                  <option value="en">English</option>
-                  <option value="zh">中文</option>
-                  <option value="es">Español</option>
-                  <option value="pt">Português</option>
-                </select>
-              </div>
-
+              
               <motion.button
                 className="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all"
                 whileHover={{ scale: 1.05 }}
@@ -201,7 +168,8 @@ const Header = () => {
             </motion.button>
           </div>
 
-           <AnimatePresence>
+          {/* Mobile Menu */}
+          <AnimatePresence>
             {isOpen && (
               <motion.div
                 className="md:hidden mt-4 pt-4 border-t border-gray-200 overflow-hidden"
@@ -222,31 +190,19 @@ const Header = () => {
                       <Link
                         href={link.href}
                         onClick={(e) => handleNavClick(e, link)}
-                        className={`block px-4 py-3 rounded-lg font-medium transition-all ${isActive(link.href)
-                          ? 'text-blue-600 bg-blue-50'
-                          : 'text-gray-800 hover:bg-gray-100'
-                          }`}
+                        className={`block px-4 py-3 rounded-lg font-medium transition-all ${
+                          isActive(link.href)
+                            ? 'text-blue-600 bg-blue-50'
+                            : 'text-gray-800 hover:bg-gray-100'
+                        }`}
                       >
                         {link.label}
                       </Link>
                     </motion.div>
                   ))}
-                   
-                  <motion.div
-                    variants={linkVariants}
-                    custom={navLinks.length}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    <div className="px-4">
-                      <select aria-label="Select language" className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm outline-none transition duration-150 ease-in-out focus:border-gray-900 focus:ring-1 focus:ring-gray-900 dark:border-gray-600 dark:focus:border-gray-600 dark:focus:ring-gray-600">
-                        <option value="en">English</option>
-                        <option value="zh">中文</option>
-                        <option value="es">Español</option>
-                        <option value="pt">Português</option>
-                      </select>
-                    </div>
 
+                  <motion.div variants={linkVariants} custom={navLinks.length} initial="hidden" animate="visible">
+                     
                     <motion.button
                       className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all mt-2"
                       whileHover={{ scale: 1.02 }}
@@ -258,15 +214,12 @@ const Header = () => {
                 </motion.div>
               </motion.div>
             )}
-
           </AnimatePresence>
-
         </nav>
       </motion.header>
 
-      {/* Spacer to prevent content from hiding under fixed header */}
-      <div className="h-20"></div>
-    </>
+      {/* Spacer */}
+     </>
   )
 }
 

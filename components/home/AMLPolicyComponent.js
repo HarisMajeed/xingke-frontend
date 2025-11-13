@@ -215,12 +215,12 @@ const AMLPolicyComponent = () => {
             For inquiries regarding our Anti-Money Laundering policy or compliance procedures, please contact us:
           </p>
           <motion.a 
-            href="mailto:support@mail-biteitc.com" 
+            href="mailto:support@coincollection.com" 
             className="text-blue-400 hover:text-blue-300 transition font-semibold inline-block"
             whileHover={{ x: 5 }}
             transition={{ duration: 0.2 }}
           >
-            support@mail-biteitc.com
+            support@coincollection.com
           </motion.a>
         </motion.div>
       </div>

@@ -204,7 +204,7 @@ const ContactUs = () => {
                 {/* Contact Cards */}
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                   <motion.a
-                    href="mailto:support@mail-biteitc.com"
+                    href="mailto:support@coincollection.com"
                     className="block"
                     variants={itemVariants}
                     whileHover={{ x: 5 }}
@@ -219,7 +219,7 @@ const ContactUs = () => {
                       <div className="min-w-0">
                         <h3 className="text-black font-bold text-base sm:text-lg">Email</h3>
                         <p className="text-black text-sm sm:text-base mt-1 break-all hover:text-blue-400 transition">
-                          support@mail-biteitc.com
+                          support@coincollection.com
                         </p>
                       </div>
                     </div>

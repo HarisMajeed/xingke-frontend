@@ -49,7 +49,7 @@ export default function PoliciesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-br pt-[72px] from-white via-blue-50 to-white">
       {/* Header */}
       <motion.div 
         className="bg-gradient-to-r from-blue-600 to-cyan-600 px-4 sm:px-6 md:px-12 py-8 sm:py-12 md:py-16"
@@ -224,12 +224,12 @@ export default function PoliciesPage() {
                 For privacy inquiries or compliance questions, please contact our team:
               </p>
               <motion.a 
-                href="mailto:support@mail-biteitc.com" 
+                href="mailto:support@coincollection.com" 
                 className="text-blue-600 hover:text-blue-700 transition font-semibold inline-block"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                support@mail-biteitc.com
+                support@coincollection.com
               </motion.a>
             </motion.div>
           </div>
