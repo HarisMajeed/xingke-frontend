@@ -12,7 +12,7 @@ export function HeroSection() {
           Driven to make digital currency available to investors globally.
         </h1>
         <p className="mt-6 max-w-3xl text-base text-white/80 sm:text-lg">
-          Coin Reserve is a premier cryptocurrency OTC trading desk headquartered in
+          Coin Collection is a premier cryptocurrency OTC trading desk headquartered in
           Australia. We specialise in providing deep liquidity &amp; offer services
           24/7 across all major digital asset pairs.
         </p>

@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, Clock, Users } from 'lucide-react';
@@ -14,57 +14,90 @@ const ContactUs = () => {
   });
 
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    message: '',
+  });
+  const [submissionError, setSubmissionError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+    if (errors[name]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: '',
+      }));
+    }
   };
 
   const validateForm = () => {
+    const newErrors = {};
+
     if (!formData.name.trim()) {
-      toast.error('Please enter your name');
-      return false;
+      newErrors.name = 'Please enter your name';
     }
     if (!formData.email.trim()) {
-      toast.error('Please enter your email');
-      return false;
+      newErrors.email = 'Please enter your email';
     }
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
-      toast.error('Please enter a valid email');
-      return false;
+      newErrors.email = 'Please enter a valid email address';
     }
     if (!formData.phone.trim()) {
-      toast.error('Please enter your phone number');
-      return false;
+      newErrors.phone = 'Please enter your phone number';
     }
     if (!formData.message.trim()) {
-      toast.error('Please enter your message');
-      return false;
+      newErrors.message = 'Please enter your message';
     }
-    return true;
+
+    setErrors((prev) => ({
+      ...prev,
+      ...newErrors,
+    }));
+
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setLoading(true);
+    setSubmissionError('');
+
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log('Form submitted:', formData);
-      toast.success('Message sent successfully! We\'ll get back to you within 24 hours.');
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json().catch(() => ({
+        success: false,
+        error: 'Unexpected response from server.',
+      }));
+
+      if (!response.ok || !result?.success) {
+        throw new Error(result?.error || 'Failed to send message. Please try again.');
+      }
+
+      toast.success("Message sent successfully! We'll get back to you within 24 hours.");
       setFormData({ name: '', email: '', phone: '', message: '' });
+      setErrors({ name: '', email: '', phone: '', message: '' });
     } catch (error) {
-      toast.error('Failed to send message. Please try again.');
+      console.error('Contact form submission failed:', error);
+      setSubmissionError(error.message || 'Failed to send message. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -204,7 +237,7 @@ const ContactUs = () => {
                 {/* Contact Cards */}
                 <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                   <motion.a
-                    href="mailto:support@coincollection.com"
+                    href="mailto:support@coincollection.it.com"
                     className="block"
                     variants={itemVariants}
                     whileHover={{ x: 5 }}
@@ -219,7 +252,7 @@ const ContactUs = () => {
                       <div className="min-w-0">
                         <h3 className="text-black font-bold text-base sm:text-lg">Email</h3>
                         <p className="text-black text-sm sm:text-base mt-1 break-all hover:text-blue-400 transition">
-                          support@coincollection.com
+                          support@coincollection.it.com
                         </p>
                       </div>
                     </div>
@@ -300,9 +333,20 @@ const ContactUs = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Your Name"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition text-sm"
+                        className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 transition text-sm ${
+                          errors.name
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-blue-400 focus:ring-blue-400'
+                        }`}
+                        aria-invalid={Boolean(errors.name)}
+                        aria-describedby={errors.name ? 'contact-name-error' : undefined}
                         whileFocus={{ scale: 1.02 }}
                       />
+                      {errors.name && (
+                        <p id="contact-name-error" className="mt-1 text-xs text-red-600">
+                          {errors.name}
+                        </p>
+                      )}
                     </motion.div>
 
                     {/* Email */}
@@ -314,9 +358,20 @@ const ContactUs = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="your@email.com"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition text-sm"
+                        className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 transition text-sm ${
+                          errors.email
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-blue-400 focus:ring-blue-400'
+                        }`}
+                        aria-invalid={Boolean(errors.email)}
+                        aria-describedby={errors.email ? 'contact-email-error' : undefined}
                         whileFocus={{ scale: 1.02 }}
                       />
+                      {errors.email && (
+                        <p id="contact-email-error" className="mt-1 text-xs text-red-600">
+                          {errors.email}
+                        </p>
+                      )}
                     </motion.div>
 
                     {/* Phone */}
@@ -328,9 +383,20 @@ const ContactUs = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         placeholder="+61 400 000 000"
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition text-sm"
+                        className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 transition text-sm ${
+                          errors.phone
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-blue-400 focus:ring-blue-400'
+                        }`}
+                        aria-invalid={Boolean(errors.phone)}
+                        aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
                         whileFocus={{ scale: 1.02 }}
                       />
+                      {errors.phone && (
+                        <p id="contact-phone-error" className="mt-1 text-xs text-red-600">
+                          {errors.phone}
+                        </p>
+                      )}
                     </motion.div>
 
                     {/* Message */}
@@ -342,9 +408,20 @@ const ContactUs = () => {
                         onChange={handleChange}
                         rows="4"
                         placeholder="Tell us about your cryptocurrency needs..."
-                        className="w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border border-gray-300 rounded-lg text-black focus:outline-none focus:border-blue-400 focus:ring-1 focus:ring-blue-400 transition resize-none text-sm"
+                        className={`w-full px-3 sm:px-4 py-2 sm:py-3 bg-white border rounded-lg text-black focus:outline-none focus:ring-1 transition resize-none text-sm ${
+                          errors.message
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-500'
+                            : 'border-gray-300 focus:border-blue-400 focus:ring-blue-400'
+                        }`}
+                        aria-invalid={Boolean(errors.message)}
+                        aria-describedby={errors.message ? 'contact-message-error' : undefined}
                         whileFocus={{ scale: 1.02 }}
                       />
+                      {errors.message && (
+                        <p id="contact-message-error" className="mt-1 text-xs text-red-600">
+                          {errors.message}
+                        </p>
+                      )}
                     </motion.div>
 
                     {/* Submit Button */}
@@ -364,6 +441,9 @@ const ContactUs = () => {
                       </motion.div>
                       {loading ? 'Sending...' : 'Send Message'}
                     </motion.button>
+                    {submissionError && (
+                      <p className="text-xs sm:text-sm text-red-600 text-center">{submissionError}</p>
+                    )}
                   </motion.div>
                 </motion.div>
               </motion.div>

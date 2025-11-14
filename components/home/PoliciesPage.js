@@ -224,12 +224,12 @@ export default function PoliciesPage() {
                 For privacy inquiries or compliance questions, please contact our team:
               </p>
               <motion.a 
-                href="mailto:support@coincollection.com" 
+                href="mailto:support@coincollection.it.com" 
                 className="text-blue-600 hover:text-blue-700 transition font-semibold inline-block"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                support@coincollection.com
+                support@coincollection.it.com
               </motion.a>
             </motion.div>
           </div>

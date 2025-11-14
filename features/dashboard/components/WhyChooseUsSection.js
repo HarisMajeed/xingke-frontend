@@ -27,7 +27,7 @@ export function WhyChooseUsSection() {
             </h2>
             <p className="mt-4 text-base text-slate-600">
               We combine a premier trading desk with concierge-grade service. From high-touch
-              execution to treasury solutions, Coin Reserve keeps you ahead of market shifts.
+              execution to treasury solutions, Coin Collection keeps you ahead of market shifts.
             </p>
           </div>
           <div className="grid gap-6">

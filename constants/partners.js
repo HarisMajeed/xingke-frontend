@@ -264,7 +264,7 @@ Some scams examples include:
 🚫 We have the right to refuse accepting customers. We will refund you in the instance that you have already made a payment.
 
 🚫 We may require additional information as per our AML/KYC policy found HERE.`,
-    footer: `If you are having any issues please contact us via email support@coincollection.com`,
+    footer: `If you are having any issues please contact us via email support@coincollection.it.com`,
     fields: {
       name: "Name",
       email: "Email",
@@ -316,7 +316,7 @@ Some scams examples include:
 🚫 我们有权拒绝接受客户。如果您已付款，我们将退款。
 
 🚫 我们可能会根据 AML/KYC 政策要求提供额外信息。`,
-    footer: `如有任何问题，请通过 support@coincollection.com 与我们联系`,
+    footer: `如有任何问题，请通过 support@coincollection.it.com 与我们联系`,
     fields: {
       name: "姓名",
       email: "邮箱",
@@ -367,7 +367,7 @@ Algunos ejemplos de estafas incluyen:
 🚫 Tenemos derecho a rechazar clientes. Reembolsaremos si ya ha realizado el pago.
 
 🚫 Podemos requerir información adicional según nuestra política AML/KYC.`,
-    footer: `Si tiene algún problema, comuníquese con support@coincollection.com`,
+    footer: `Si tiene algún problema, comuníquese con support@coincollection.it.com`,
     fields: {
       name: "Nombre",
       email: "Correo Electrónico",
@@ -418,7 +418,7 @@ Alguns exemplos de golpes incluem:
 🚫 Temos o direito de recusar clientes. Reembolsaremos se você já tiver feito o pagamento.
 
 🚫 Podemos exigir informações adicionais conforme nossa política AML/KYC.`,
-    footer: `Se você tiver qualquer problema, envie e-mail para support@coincollection.com`,
+    footer: `Se você tiver qualquer problema, envie e-mail para support@coincollection.it.com`,
     fields: {
       name: "Nome",
       email: "Email",

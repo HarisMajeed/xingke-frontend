@@ -2,7 +2,7 @@ export function ContactSection() {
   return (
     <section id="contact" className="bg-white py-20">
       <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 px-6 text-center">
-        <h2 className="text-2xl font-semibold text-brand-700">Ready to trade with Coin Reserve?</h2>
+        <h2 className="text-2xl font-semibold text-brand-700">Ready to trade with Coin Collection?</h2>
         <p className="max-w-3xl text-sm text-slate-600">
           Speak with our trading desk to unlock bespoke liquidity solutions and global digital
           asset access tailored to your workflow.
